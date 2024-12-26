@@ -1,0 +1,56 @@
+/* Button Styles */
+.button {
+  display: inline-block;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-weight: 600;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: var(--transition-base);
+}
+
+.button-primary {
+  background: var(--primary-gradient);
+  color: var(--text-primary);
+}
+
+.button-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--neon-glow);
+}
+
+/* Card Styles */
+.card {
+  background: var(--surface);
+  border-radius: 15px;
+  padding: var(--spacing-lg);
+  transition: var(--transition-base);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--neon-glow);
+}
+
+/* Section Styles */
+.section {
+  padding: var(--spacing-xl) var(--spacing-lg);
+}
+
+.section-title {
+  font-size: var(--font-size-h2);
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Grid Layouts */
+.grid {
+  display: grid;
+  gap: var(--spacing-lg);
+}
+
+.grid-features {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
