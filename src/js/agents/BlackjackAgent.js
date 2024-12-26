@@ -1,3 +1,4 @@
+// BlackjackAgent.js - Enhanced AI Agent
 export class BlackjackAgent {
   constructor(name, avatar, stats = {}) {
     this.name = name;
@@ -5,24 +6,61 @@ export class BlackjackAgent {
     this.stats = {
       gamesPlayed: stats.gamesPlayed || 0,
       winRate: stats.winRate || 0,
-      highScore: stats.highScore || 0
+      highScore: stats.highScore || 0,
+      cardsPlayed: [], // Track card history
+      decisionMatrix: new Map(), // Store decision patterns
     };
+    this.learningRate = 0.1;
+    this.cardCounter = 0;
   }
 
-  getAdvice(playerHand, dealerUpCard) {
+  calculateProbabilities(playerHand, dealerUpCard, remainingCards) {
     const playerValue = playerHand.value;
     const dealerValue = dealerUpCard.value;
-
-    if (playerValue >= 17) return 'Stand';
-    if (playerValue <= 11) return 'Hit';
-    if (playerValue === 12 && dealerValue >= 4 && dealerValue <= 6) return 'Stand';
-    if (playerValue >= 13 && playerValue <= 16 && dealerValue >= 2 && dealerValue <= 6) return 'Stand';
+    const cardCounts = this.countCards(remainingCards);
     
-    return 'Hit';
+    // Calculate bust probability
+    const bustCards = cardCounts.filter(card => (playerValue + card > 21)).length;
+    const bustProbability = bustCards / remainingCards.length;
+    
+    // Calculate win probability
+    const winProbability = this.calculateWinProbability(playerValue, dealerValue, cardCounts);
+    
+    return { bustProbability, winProbability };
   }
 
-  updateStats(won) {
-    this.stats.gamesPlayed++;
-    this.stats.winRate = ((this.stats.winRate * (this.stats.gamesPlayed - 1) + (won ? 1 : 0)) / this.stats.gamesPlayed);
+  getAdvice(playerHand, dealerUpCard, gameState) {
+    const probs = this.calculateProbabilities(playerHand, dealerUpCard, gameState.remainingCards);
+    
+    // Advanced decision making
+    if (probs.bustProbability > 0.6) return 'Stand';
+    if (probs.winProbability > 0.7) return 'Hit';
+    
+    // Basic strategy with ML enhancement
+    const decision = this.getBasicStrategy(playerHand.value, dealerUpCard.value);
+    const adjustedDecision = this.applyMLAdjustment(decision, probs);
+    
+    this.updateDecisionMatrix(playerHand, dealerUpCard, adjustedDecision);
+    return adjustedDecision;
+  }
+
+  updateDecisionMatrix(playerHand, dealerUpCard, decision) {
+    const key = `${playerHand.value}-${dealerUpCard.value}`;
+    const currentSuccess = this.decisionMatrix.get(key)?.successRate || 0.5;
+    
+    // Update success rate based on game outcome
+    this.decisionMatrix.set(key, {
+      decision,
+      successRate: currentSuccess * (1 - this.learningRate) + (this.won ? 1 : 0) * this.learningRate
+    });
+  }
+
+  // Advanced card counting system
+  countCards(card) {
+    const value = card.value;
+    if (value >= 2 && value <= 6) this.cardCounter++;
+    if (value >= 10 || value === 1) this.cardCounter--;
+    
+    return this.cardCounter;
   }
 }

@@ -1,30 +1,19 @@
+/* variables.css - Updated color scheme */
 :root {
   /* Colors */
   --primary-gradient: linear-gradient(135deg, #2a3bff 0%, #c829ff 100%);
-  --secondary-gradient: linear-gradient(180deg, #f5f5ff 0%, #e8e8ff 100%);
+  --secondary-gradient: linear-gradient(180deg, #1a1a2e 0%, #141422 100%);
   --neon-glow: 0 0 10px rgba(62, 243, 255, 0.4);
   --neon-glow-intense: 0 0 20px rgba(62, 243, 255, 0.6);
-  --background: #f0f0ff;
-  --surface: rgba(255, 255, 255, 0.8);
-  --text-primary: #1a1a2e;
-  --text-secondary: #4a4a6a;
+  --background: #0a0a12;
+  --surface: rgba(26, 26, 46, 0.8);
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0b8;
   
-  /* Typography */
-  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-size-base: 16px;
-  --font-size-h1: 4rem;
-  --font-size-h2: 2.5rem;
-  --font-size-h3: 1.75rem;
-  
-  /* Spacing */
-  --spacing-xs: 0.5rem;
-  --spacing-sm: 1rem;
-  --spacing-md: 1.5rem;
-  --spacing-lg: 2rem;
-  --spacing-xl: 3rem;
-  
-  /* Animation */
-  --transition-fast: 0.2s ease;
-  --transition-base: 0.3s ease;
-  --transition-slow: 0.5s ease;
+  /* New color variables */
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --card-hover: rgba(255, 255, 255, 0.1);
+  --error: #ff4e4e;
+  --success: #4eff91;
+  --warning: #ffd74e;
 }
